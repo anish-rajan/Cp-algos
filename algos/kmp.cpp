@@ -54,3 +54,34 @@ void KMPSearch(string pat, string txt)
         }
     }
 }
+
+/////////////////////////////No overlap prefix function//////////////////////
+
+vector<long long int> prefix_function(string s)
+{
+    reverse(s.begin(), s.end());
+    long long int n = (long long int)s.length();
+    vector<long long int> pi(n);
+    vector<long long int> pi1(n);
+    for (long long int i = 1; i < n; i++)
+    {
+        long long int j = pi[i - 1];
+        long long int j1 = pi1[i - 1];
+        if (j > (i - 1) / 2)
+            j = pi1[j - 1];
+        while (j > 0 && s[i] != s[j])
+        {
+            j = pi1[j - 1];
+        }
+        while (j1 > 0 && s[i] != s[j1])
+            j1 = pi1[j1 - 1];
+        if (s[i] == s[j])
+            j++;
+        if (s[i] == s[j1])
+            j1++;
+        pi[i] = j;
+        pi1[i] = j1;
+    }
+    // cout << dp[ind] << " ";
+    return pi;
+}

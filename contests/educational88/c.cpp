@@ -1,0 +1,71 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+typedef long double ld;
+#define mp make_pair
+#define v vector
+#define inp_push(no, v) \
+    ll no;              \
+    cin >> no;          \
+    v.push_back(no);
+#define pb push_back
+#define fi first
+#define se second
+#define ALL(v) v.begin(), v.end()
+#define UN(v) sort((v).begin(), (v).end()), v.erase(unique(v.begin(), v.end()), v.end())
+#define N 500005
+#define mod 1000000007
+#define INF INT_MAX
+
+ll t;
+
+long long powmod(long long x, long long y, long long m)
+{
+    long long res = 1LL;
+    while (y)
+    {
+        if (y & 1)
+            res = (res * x) % m;
+        // cout << x << " " << mod << "\n";
+        x = (x * x) % m;
+        y /= 2;
+    }
+    return res;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> t;
+    while (t--)
+    {
+        ll h, c;
+        ld t1;
+        cin >> h >> c >> t1;
+        ld p = (h + c) / 2;
+        if (t1 >= h)
+        {
+            cout << 1 << "\n";
+            continue;
+        }
+        else if (t1 <= p)
+        {
+            cout << 2 << "\n";
+            continue;
+        }
+        else
+        {
+            ll k = (h - t1) / (2 * t1 - h - c);
+            ld p1 = abs((k * (h + c) + h) / (2.0 * k + 1) - t1);
+            ld p2 = abs(((k + 1) * (h + c) + h) / (2.0 * k + 3) - t1);
+            // cout << p1 << " " << p2 << "\n";
+            if (p1 <= p2)
+                cout << 2 * k + 1 << "\n";
+            else
+                cout << 2 * k + 3 << "\n";
+        }
+    }
+}

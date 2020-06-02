@@ -3,46 +3,63 @@
 using namespace std;
 #define N 100005
 
-using S = long long int;
-
-S subtree[N], parentcentroid[N];
-set<S> g[N];
-S nodes;
-
-void dfs(S k, S par)
+struct CentroidTree
 {
-    nodes++;
-    subtree[k] = 1;
-    for (auto it : g[k])
+    using S = int;
+    using T = int;
+    S start, numNodes;
+    vector<set<T>> adj;
+    vector<S> subtree;
+    vector<S> parentCentroid;
+    CentroidTree(S s, S nodes)
     {
-        if (it == par)
-            continue;
-        dfs(it, k);
-        subtree[k] += subtree[it];
+        start = s;
+        adj.resize(nodes);
+        subtree.resize(nodes);
+        parentCentroid.resize(nodes);
     }
-}
-
-S centroid(S k, S par)
-{
-    for (auto it : g[k])
+    void addEdge(T a, T b)
     {
-        if (it == par)
-            continue;
-        if (subtree[it] > (nodes >> 1))
-            return centroid(it, k);
+        adj[a].insert(b);
+        adj[b].insert(a);
     }
-    return k;
-}
-
-void decompose(S k, S par)
-{
-    nodes = 0;
-    dfs(k, k);
-    S node = centroid(k, k);
-    parentcentroid[node] = par;
-    for (auto it : g[node])
+    void setGraph(vector<set<T>> _graph)
     {
-        g[it].erase(node);
-        decompose(it, node);
+        adj = _graph;
     }
-}
+    void calcSubtree(S node, S parent)
+    {
+        numNodes++;
+        subtree[node] = 1;
+        for (auto i : adj[node])
+        {
+            if (i == parent)
+                continue;
+            calcSubtree(i, node);
+            subtree[node] += subtree[i];
+        }
+    }
+    S getCentroid(S node, S parent)
+    {
+        for (auto i : adj[node])
+        {
+            if (i == parent)
+                continue;
+            if (subtree[i] > (numNodes / 2))
+                return getCentroid(i, node);
+        }
+        return node;
+    }
+    void decompose(S node, S parent)
+    {
+        numNodes = 0;
+        calcSubtree(node, node);
+        S centroid = getCentroid(node, node);
+        parentCentroid[centroid] = parent;
+        for (auto i : adj[centroid])
+        {
+            adj[i].erase(centroid);
+            decompose(i, centroid);
+        }
+    }
+};

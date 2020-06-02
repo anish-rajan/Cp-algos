@@ -76,29 +76,43 @@ int main()
     {
         if (!visited[i])
         {
+            // cout << i << " " << c << " \n";
             st.pb(i);
             ll nr = 0, nb = 0;
-            dfs(1, 1, nr, nb);
+            dfs(i, 1, nr, nb);
             vals.pb(v<ll>(3));
             vals.back()[1] = nr, vals.back()[2] = nb;
             dp.pb(v<ll>(n + 1, 0));
-            dp[c][0] = 1;
+            // dp[c][0] = 1;
             if (c == 0)
             {
-                dp[c][nr] = 1, dp[c][nb] = 1;
+                dp[c][nr] = 1, dp[c][nb] = 2;
+                c++;
+                // cout << c << "\n";
                 continue;
             }
-            for (ll j = 1; j <= n; j++)
+            // cout << nr << " " << nb << "\n";
+            for (ll j = 0; j <= n; j++)
             {
-                if (dp[c][j - nr] == 1)
-                    dp[c][j] = 1;
-                else if (dp[c][j - nb] == 1)
-                    dp[c][j] = 2;
+                if (j - nr >= 0)
+                    if (dp[c - 1][j - nr])
+                        dp[c][j] = 1;
+                if (j - nb >= 0)
+                    if (dp[c - 1][j - nb])
+                        dp[c][j] = 2;
             }
             c++;
+            // cout << c << "\n";
         }
     }
     c--;
+    // cout << visited[3] << " " << n << " " << c << " " << n2 << "\n";
+    // for (ll i = 0; i <= c; i++)
+    // {
+    //     for (ll j = 0; j <= n; j++)
+    //         cout << dp[i][j] << " ";
+    //     cout << "\n";
+    // }
     if (!dp[c][n2])
         poss = 0;
     if (poss == 0)
@@ -106,12 +120,15 @@ int main()
         cout << "NO\n";
         return 0;
     }
+    cout << "YES\n";
     for (ll j = c; j >= 0; j--)
     {
-        dfs1(st[c], dp[j][n2]);
+        dfs1(st[j], dp[j][n2]);
+        // cout << dp[j][n2] << " " << st[j] << " " << vals[j][dp[j][n2]] << "\n";
         n2 -= vals[j][dp[j][n2]];
     }
     for (ll i = 1; i <= n; i++)
         cout << visited[i];
     cout << "\n";
+    // cout << n1 << " " << n3 << "\n";
 }
