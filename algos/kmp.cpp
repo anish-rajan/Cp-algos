@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//////////////////////////////Overlapping prefix function//////////////////////////////
+
 vector<long long int> prefix_function(string s)
 {
     long long int n = (long long int)s.length();

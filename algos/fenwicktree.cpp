@@ -26,12 +26,6 @@ struct FenwickTree
         bit.assign(n + 1, 0);
     }
 
-    // FenwickTree(vector<S> a) : FenwickTree(a.size())
-    // {
-    //     for (size_t i = 0; i < n; i++)
-    //         add(i, a[i]);
-    // }
-
     S search(S sum) // for finding sumth number if arranged in ascending order.
     {
         S x = 0;
