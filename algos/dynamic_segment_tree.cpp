@@ -38,6 +38,7 @@ struct DST
             root->right = new Vertex(0, NULL, NULL);
         update(root->left, l, (l + r) / 2, s, e, value);
         update(root->right, (l + r) / 2 + 1, r, s, e, value);
+        root->Sum = root->left->Sum + root->right->Sum;
     }
 
     S query(Vertex *root, S tl, S tr, S l, S r)
