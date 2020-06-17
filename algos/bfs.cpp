@@ -16,9 +16,8 @@ typedef long double ld;
 using S = ll;
 vector<vector<S>> adj; // adjacency list representation
 S n;                   // number of nodes
-S s;                   // source vertex
 
-void bfs(vector<S> &d, vector<S> &p, vector<S> &used)
+void bfs(S s, vector<S> &d, vector<S> &p, vector<S> &used)
 {
     queue<S> q;
     q.push(s);
