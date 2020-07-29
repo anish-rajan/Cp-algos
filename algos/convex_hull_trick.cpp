@@ -18,6 +18,7 @@ typedef long double ld;
 #define mod 1000000009
 #define INF INT_MAX
 
+//currently upper convex hull..
 struct CHT
 {
     //**CHT for decreasing slope and min query**//
