@@ -1,10 +1,11 @@
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long int ll;
 #define N 100005
 #define INF INT_MAX
 
-using S = long long int;
+using S = ll;
 
 vector<S> a(N);
 
